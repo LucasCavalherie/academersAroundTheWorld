@@ -19,11 +19,11 @@ class FirebaseStorageManager {
     }
     
     // CREATE - Upload Data
-    func upload(data: Data, atPath path: String, completion: @escaping (URL?, Error?) -> Void) {
+    func upload(uuid: String, data: Data, atPath path: String, completion: @escaping (URL?, Error?) -> Void) {
         let reference = storageReference.child(path)
         
         let newMetadata = StorageMetadata()
-        newMetadata.customMetadata = ["chave" : "valor"]
+        newMetadata.customMetadata = ["uuid" : uuid]
         
         reference.putData(data, metadata: newMetadata) { metadata, error in
             guard error == nil else {
@@ -38,10 +38,10 @@ class FirebaseStorageManager {
     }
     
     // READ - Download Data
-    func download(fromPath path: String, completion: @escaping ([Data]?, Error?) -> Void) {
+    func download(fromPath path: String, completion: @escaping ([ImageModel]?, Error?) -> Void) {
         let reference = storageReference.child(path)
         
-        var datas : [Data] = []
+        var datas : [ImageModel] = []
         
         reference.listAll{ (result, error) in
             if let error = error {
@@ -49,8 +49,22 @@ class FirebaseStorageManager {
             }
             
             for item in result?.items ?? [] {
+                
+                var name: String  = ""
+                var date: Date  = Date()
+                
                 item.getMetadata() { data, error in
-                    print(data)
+                    if let data = data {
+                        if let customMetadata = data.customMetadata {
+                            name = customMetadata["uuid"] ?? ""
+                            print(name)
+                        }
+                        
+                        if let time = data.timeCreated {
+                            date = time
+                            print(date)
+                        }  
+                    }
                 }
                 
                 item.getData(maxSize: 10 * 1024 * 1024) { data, error in
@@ -59,7 +73,8 @@ class FirebaseStorageManager {
                     }
                     
                     if let data = data {
-                        datas.append(data)
+                        var model = ImageModel(name: name, time: date, data: data)
+                        datas.append(model)
                         completion(datas, nil)
                     }
                 }

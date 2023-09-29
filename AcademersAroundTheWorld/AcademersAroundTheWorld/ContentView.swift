@@ -31,7 +31,7 @@ struct ContentView: View {
                             if let data = try? await item.loadTransferable(type: Data.self) {
                                 if let uiImage = UIImage(data: data) {
                                     let uuidString : String = UUID().description
-                                    firebaseStorageManager.upload(data: data, atPath: "/arquivos/"+uuidString) { url, error in
+                                    firebaseStorageManager.upload(uuid: uuidString, data: data, atPath: "/arquivos/"+uuidString) { url, error in
                                         if let error = error {
                                             print("Erro ao fazer upload: \(error.localizedDescription)")
                                         } else if let downloadURL = url {
@@ -58,6 +58,13 @@ struct ContentView: View {
                     }
                 } label: {
                     Text("Deletar imagens")
+                }
+                Button {
+                    Task {
+                        imageSaved.getImages()
+                    }
+                } label: {
+                    Text("Recarregar Imagens")
                 }
             }
             .toolbar{

@@ -14,7 +14,7 @@ class ImagesSaved : ObservableObject {
     
     static let shared = ImagesSaved()
     private init() {
-        getImages()
+        //getImages()
     }
     
     func getImages(){
@@ -26,7 +26,7 @@ class ImagesSaved : ObservableObject {
                 print("Download bem-sucedido!: \(data)")
                 
                 for item in data {
-                    if let uiImage = UIImage(data: item) {
+                    if let uiImage = UIImage(data: item.data) {
                         print("Dados de imagem válidos")
                         self.images.append(Image(uiImage: uiImage))
                     } else {
