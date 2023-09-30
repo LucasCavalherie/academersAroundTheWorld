@@ -18,7 +18,7 @@
 		73FE1A672AC73D1900DDE25A /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 73FE1A662AC73D1900DDE25A /* FirebaseAppCheck */; };
 		73FE1A692AC73D8B00DDE25A /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE1A682AC73D8B00DDE25A /* FirebaseStorageManager.swift */; };
 		73FE1A6C2AC743FB00DDE25A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 73FE1A6B2AC743FB00DDE25A /* FirebaseStorage */; };
-		73FE1A702AC74D4500DDE25A /* ImagesSaved.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE1A6F2AC74D4500DDE25A /* ImagesSaved.swift */; };
+		73FE1A702AC74D4500DDE25A /* ImagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE1A6F2AC74D4500DDE25A /* ImagesViewModel.swift */; };
 		73FE1A752AC7804F00DDE25A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73FE1A742AC7804F00DDE25A /* GoogleService-Info.plist */; };
 		73FE1A772AC7827300DDE25A /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE1A762AC7827300DDE25A /* ImageModel.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +30,7 @@
 		73FE1A512AC73AB100DDE25A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		73FE1A542AC73AB100DDE25A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		73FE1A682AC73D8B00DDE25A /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
-		73FE1A6F2AC74D4500DDE25A /* ImagesSaved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesSaved.swift; sourceTree = "<group>"; };
+		73FE1A6F2AC74D4500DDE25A /* ImagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewModel.swift; sourceTree = "<group>"; };
 		73FE1A742AC7804F00DDE25A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		73FE1A762AC7827300DDE25A /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,11 +75,11 @@
 				73FE1A742AC7804F00DDE25A /* GoogleService-Info.plist */,
 				73FE1A4D2AC73AB000DDE25A /* AcademersAroundTheWorldApp.swift */,
 				73FE1A4F2AC73AB000DDE25A /* ContentView.swift */,
+				73FE1A6F2AC74D4500DDE25A /* ImagesViewModel.swift */,
+				73FE1A762AC7827300DDE25A /* ImageModel.swift */,
 				73FE1A682AC73D8B00DDE25A /* FirebaseStorageManager.swift */,
-				73FE1A6F2AC74D4500DDE25A /* ImagesSaved.swift */,
 				73FE1A512AC73AB100DDE25A /* Assets.xcassets */,
 				73FE1A532AC73AB100DDE25A /* Preview Content */,
-				73FE1A762AC7827300DDE25A /* ImageModel.swift */,
 			);
 			path = AcademersAroundTheWorld;
 			sourceTree = "<group>";
@@ -183,7 +183,7 @@
 			files = (
 				73FE1A502AC73AB000DDE25A /* ContentView.swift in Sources */,
 				73FE1A772AC7827300DDE25A /* ImageModel.swift in Sources */,
-				73FE1A702AC74D4500DDE25A /* ImagesSaved.swift in Sources */,
+				73FE1A702AC74D4500DDE25A /* ImagesViewModel.swift in Sources */,
 				73FE1A4E2AC73AB000DDE25A /* AcademersAroundTheWorldApp.swift in Sources */,
 				73FE1A692AC73D8B00DDE25A /* FirebaseStorageManager.swift in Sources */,
 			);

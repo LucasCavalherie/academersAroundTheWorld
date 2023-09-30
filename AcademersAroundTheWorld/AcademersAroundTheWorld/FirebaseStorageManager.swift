@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseStorage
+import SwiftUI
 
 class FirebaseStorageManager {
     
@@ -19,7 +20,7 @@ class FirebaseStorageManager {
     }
     
     // CREATE - Upload Data
-    func upload(uuid: String, data: Data, atPath path: String, completion: @escaping (URL?, Error?) -> Void) {
+    func upload(uuid: String, data: Data, atPath path: String, completion: @escaping (URL?, Date?, Error?) -> Void) {
         let reference = storageReference.child(path)
         
         let newMetadata = StorageMetadata()
@@ -27,62 +28,77 @@ class FirebaseStorageManager {
         
         reference.putData(data, metadata: newMetadata) { metadata, error in
             guard error == nil else {
-                completion(nil, error)
+                completion(nil, nil, error)
                 return
             }
             
             reference.downloadURL { url, error in
-                completion(url, error)
+                completion(url, metadata?.timeCreated, error)
+            }
+        }
+    }
+    
+    func listImageNames(completion: @escaping ([String]?, Error?) -> Void) {
+        let reference = storageReference.child("/arquivos/")
+        
+        reference.listAll{ result, error in
+            if let error = error {
+                completion(nil, error)
+            }
+            
+            if let result = result {
+                let imageNames = result.items.map { $0.name }
+                completion(imageNames, nil)
+            }
+        }
+    }
+    
+    func downloadAll(fromPath fileNames: [String], completion: @escaping ([ImageModel]?, Error?) -> Void) {
+        var datas : [ImageModel] = []
+        for fileName in fileNames {
+            download(fromPath: fileName){ model, error in
+                if let model = model {
+                    datas.append(model)
+                    completion(datas, error)
+                }
             }
         }
     }
     
     // READ - Download Data
-    func download(fromPath path: String, completion: @escaping ([ImageModel]?, Error?) -> Void) {
-        let reference = storageReference.child(path)
+    func download(fromPath fileName: String, completion: @escaping (ImageModel?, Error?) -> Void) {
+        let reference = storageReference.child("/arquivos/"+fileName)
         
-        var datas : [ImageModel] = []
+        var name: String  = ""
+        var date: Date  = Date()
         
-        reference.listAll{ (result, error) in
+        reference.getMetadata() { data, error in
+            if let data = data {
+                if let customMetadata = data.customMetadata {
+                    name = customMetadata["uuid"] ?? ""
+                }
+                
+                if let time = data.timeCreated {
+                    date = time
+                }
+            }
+        }
+        
+        reference.getData(maxSize: 10 * 1024 * 1024) { data, error in
             if let error = error {
                 completion(nil, error)
             }
             
-            for item in result?.items ?? [] {
-                
-                var name: String  = ""
-                var date: Date  = Date()
-                
-                item.getMetadata() { data, error in
-                    if let data = data {
-                        if let customMetadata = data.customMetadata {
-                            name = customMetadata["uuid"] ?? ""
-                            print(name)
-                        }
-                        
-                        if let time = data.timeCreated {
-                            date = time
-                            print(date)
-                        }  
-                    }
+            if let data = data {
+                if let uiImage = UIImage(data: data) {
+                    let model = ImageModel(name: name, time: date, image: Image(uiImage: uiImage))
+                    completion(model, nil)
+                } else {
+                    print("Dados de imagem inválidos")
                 }
                 
-                item.getData(maxSize: 10 * 1024 * 1024) { data, error in
-                    if let error = error {
-                        completion(nil, error)
-                    }
-                    
-                    if let data = data {
-                        var model = ImageModel(name: name, time: date, data: data)
-                        datas.append(model)
-                        completion(datas, nil)
-                    }
-                }
             }
-            
-            completion(datas, nil)
         }
-        completion(datas, nil)
     }
     
     // DELETE

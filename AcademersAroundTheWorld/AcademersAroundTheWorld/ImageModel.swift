@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ImageModel {
     var name: String
     var time: Date
-    var data: Data
+    var image: Image
 }
