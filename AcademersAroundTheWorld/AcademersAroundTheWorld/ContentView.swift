@@ -67,36 +67,23 @@ struct ContentView: View {
                 
                 LazyVStack {
                     ForEach(0..<imagesViewModel.images.count, id: \.self) { i in
-                        VStack (alignment: .leading) {
-                            imagesViewModel.images[i].image
-                                .resizable()
-                                .cornerRadius(10)
-                                .scaledToFit()
-                                .frame(width: 300, height: 200)
-                            
-                            VStack (alignment: .leading) {
-                                Text("Academers")
-                                    .font(.callout)
-                                    .foregroundColor(.primary)
-                                
-                                Text("Há 1 hora")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.vertical, 4)
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color("Gray"), lineWidth: 3)
-                        )
-                        .cornerRadius(10)
-                        .padding(.vertical, 8)
+                        let imagem = imagesViewModel.images[i]
                         
+                        ImageCard(imagem: imagem) {
+                            Task {
+                                firebaseStorageManager.delete(atPath: "/arquivos/\(imagem.name)") { error in
+                                    if let error = error {
+                                        print("Erro ao fazer delete: \(error.localizedDescription)")
+                                    }
+                                }
+                            }
+                            
+                            imagesViewModel.images.removeAll(where: { $0.name == imagem.name })
+                        }
+                        .padding(.horizontal, 32)
                     }
                 }
-                
-               
+                .padding(.bottom, 16)
             }
             .onChange(of: selectedItems) {
                 Task {
@@ -125,18 +112,6 @@ struct ContentView: View {
         
     }
 }
-
-//                Button {
-//                    Task {
-//                        firebaseStorageManager.delete(atPath: "/arquivos/") { error in
-//                            if let error = error {
-//                                print("Erro ao fazer delete: \(error.localizedDescription)")
-//                            }
-//                        }
-//                    }
-//                } label: {
-//                    Text("Deletar imagens")
-//                }
 
 #Preview {
     ContentView()
