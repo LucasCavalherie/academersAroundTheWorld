@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCdlhCrNfrF4d3Y4vFAJEeGhLqB8MjNJjc</string>
+	<string>AIzaSyDDy3tNxP2XAdIk6BJiOtKA_PkagLGfqMg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>822508608131</string>
+	<string>746905011508</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>appledeveloperacademy.AcademersAroundTheWorld</string>
+	<string>academers.around.the.world</string>
 	<key>PROJECT_ID</key>
-	<string>academyaroundtheworld</string>
+	<string>academy-around-the-world</string>
 	<key>STORAGE_BUCKET</key>
-	<string>academyaroundtheworld.appspot.com</string>
+	<string>academy-around-the-world.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:822508608131:ios:690701b311e954a8c359b6</string>
+	<string>1:746905011508:ios:b6e5a375795f7da6eed161</string>
 </dict>
 </plist>
