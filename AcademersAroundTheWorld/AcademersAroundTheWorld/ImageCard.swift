@@ -25,7 +25,7 @@ struct ImageCard: View {
                         .font(.callout)
                         .foregroundColor(.primary)
                     
-                    Text("\(imagem.time)")
+                    Text("\(imagem.time.getTimeInterval())")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
