@@ -21,6 +21,8 @@
 		73FE1A702AC74D4500DDE25A /* ImagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE1A6F2AC74D4500DDE25A /* ImagesViewModel.swift */; };
 		73FE1A752AC7804F00DDE25A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73FE1A742AC7804F00DDE25A /* GoogleService-Info.plist */; };
 		73FE1A772AC7827300DDE25A /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE1A762AC7827300DDE25A /* ImageModel.swift */; };
+		7866BC0F2AC88CB100CE4615 /* ImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7866BC0E2AC88CB100CE4615 /* ImageCard.swift */; };
+		7866BC132AC9CA8B00CE4615 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7866BC122AC9CA8B00CE4615 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		73FE1A6F2AC74D4500DDE25A /* ImagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewModel.swift; sourceTree = "<group>"; };
 		73FE1A742AC7804F00DDE25A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		73FE1A762AC7827300DDE25A /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
+		7866BC0E2AC88CB100CE4615 /* ImageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCard.swift; sourceTree = "<group>"; };
+		7866BC122AC9CA8B00CE4615 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				73FE1A742AC7804F00DDE25A /* GoogleService-Info.plist */,
 				73FE1A4D2AC73AB000DDE25A /* AcademersAroundTheWorldApp.swift */,
 				73FE1A4F2AC73AB000DDE25A /* ContentView.swift */,
+				7866BC0E2AC88CB100CE4615 /* ImageCard.swift */,
+				7866BC122AC9CA8B00CE4615 /* Extensions.swift */,
 				73FE1A6F2AC74D4500DDE25A /* ImagesViewModel.swift */,
 				73FE1A762AC7827300DDE25A /* ImageModel.swift */,
 				73FE1A682AC73D8B00DDE25A /* FirebaseStorageManager.swift */,
@@ -182,10 +188,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				73FE1A502AC73AB000DDE25A /* ContentView.swift in Sources */,
+				7866BC0F2AC88CB100CE4615 /* ImageCard.swift in Sources */,
 				73FE1A772AC7827300DDE25A /* ImageModel.swift in Sources */,
 				73FE1A702AC74D4500DDE25A /* ImagesViewModel.swift in Sources */,
 				73FE1A4E2AC73AB000DDE25A /* AcademersAroundTheWorldApp.swift in Sources */,
 				73FE1A692AC73D8B00DDE25A /* FirebaseStorageManager.swift in Sources */,
+				7866BC132AC9CA8B00CE4615 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
