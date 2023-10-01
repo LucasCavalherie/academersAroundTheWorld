@@ -9,9 +9,9 @@ import PhotosUI
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedItems = [PhotosPickerItem]()
     var firebaseStorageManager = FirebaseStorageManager()
     @ObservedObject var imagesViewModel = ImagesViewModel.shared
+    @State private var isDeleteConfirmationVisible = false
 
     var body: some View {
         NavigationStack {
@@ -35,7 +35,9 @@ struct ContentView: View {
                             .cornerRadius(10)
                     }
                     
-                    PhotosPicker(selection: $selectedItems, matching: .images) {
+                    NavigationLink {
+                        CreateView()
+                    } label: {
                         HStack {
                             Image(systemName: "paperplane.fill")
                             Text("Enviar fotos")
@@ -67,45 +69,34 @@ struct ContentView: View {
                 
                 LazyVStack {
                     ForEach(0..<imagesViewModel.images.count, id: \.self) { i in
-                        let imagem = imagesViewModel.images[i]
+                        let image = imagesViewModel.images[i]
                         
-                        ImageCard(imagem: imagem) {
-                            Task {
-                                firebaseStorageManager.delete(atPath: "/arquivos/\(imagem.name)") { error in
-                                    if let error = error {
-                                        print("Erro ao fazer delete: \(error.localizedDescription)")
+                        ImageCard(imageModel: image) {
+                            isDeleteConfirmationVisible.toggle()
+                        }
+                        .alert(isPresented: $isDeleteConfirmationVisible) {
+                            // Modal de confirmação
+                            Alert(
+                                title: Text("Confirmar exclusão"),
+                                message: Text("Tem certeza de que deseja excluir esta imagem?"),
+                                primaryButton: .destructive(Text("Excluir")) {
+                                    Task {
+                                        firebaseStorageManager.delete(atPath: "/arquivos/\(image.name)") { error in
+                                            if let error = error {
+                                                print("Erro ao fazer delete: \(error.localizedDescription)")
+                                            }
+                                        }
                                     }
-                                }
-                            }
-                            
-                            imagesViewModel.images.removeAll(where: { $0.name == imagem.name })
+                                    
+                                    imagesViewModel.images.removeAll(where: {$0.name == image.name})
+                                },
+                                secondaryButton: .cancel()
+                            )
                         }
                         .padding(.horizontal, 32)
                     }
                 }
                 .padding(.bottom, 16)
-            }
-            .onChange(of: selectedItems) {
-                Task {
-                    for item in selectedItems {
-                        if let data = try? await item.loadTransferable(type: Data.self) {
-                            if let uiImage = UIImage(data: data) {
-                                let uuidString : String = UUID().description
-                                firebaseStorageManager.upload(uuid: uuidString, data: data, atPath: "/arquivos/" + uuidString) { url, time, error in
-                                    if let error = error {
-                                        print("Erro ao fazer upload: \(error.localizedDescription)")
-                                    } else if let downloadURL = url {
-                                        print("Upload bem-sucedido! URL de download: \(downloadURL.absoluteString)")
-                                    }
-                                    
-                                    if let time = time {
-                                        imagesViewModel.saveNewImage(name: uuidString, time: time, image: Image(uiImage: uiImage))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
             .ignoresSafeArea()
         }

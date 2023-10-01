@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ImageCard: View {
-    @State var imagem: ImageModel
+    @State var imageModel: ImageModel
     var deletarImagem: () -> Void
     
     var body: some View {
         VStack (alignment: .leading) {
-            imagem.image
+            imageModel.image
                 .resizable()
                 .cornerRadius(10)
                 .scaledToFit()
@@ -21,11 +21,11 @@ struct ImageCard: View {
             
             HStack{
                 VStack (alignment: .leading) {
-                    Text("Academers")
+                    Text(imageModel.title)
                         .font(.callout)
                         .foregroundColor(.primary)
                     
-                    Text("\(imagem.time.getTimeInterval())")
+                    Text("\(imageModel.time.getTimeInterval())")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -51,7 +51,7 @@ struct ImageCard: View {
 }
 
 #Preview {
-    ImageCard(imagem: ImageModel(name: "a", time: Date(), image: Image("a"))){
+    ImageCard(imageModel: ImageModel(title: "a", name: "a", time: Date(), image: Image("a"))){
         print("a")
     }
     .frame(maxWidth: 300)

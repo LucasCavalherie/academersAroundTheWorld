@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class ImagesViewModel : ObservableObject {
-    @Published var images : [ImageModel] = [ImageModel(name: "name", time: Date(), image: Image("Example")), ImageModel(name: "name", time: Date(), image: Image("Example"))]
+    @Published var images : [ImageModel] = []
     
     var firebaseStorageManager = FirebaseStorageManager()
     
@@ -20,8 +20,8 @@ class ImagesViewModel : ObservableObject {
         //getImages()
     }
     
-    func saveNewImage(name: String, time: Date, image: Image) {
-        let newImage = ImageModel(name: name, time: time, image: image)
+    func saveNewImage(title: String, name: String, time: Date, image: Image) {
+        let newImage = ImageModel(title: title, name: name, time: time, image: image)
         images.append(newImage)
     }
     

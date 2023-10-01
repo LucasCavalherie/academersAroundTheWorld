@@ -20,11 +20,11 @@ class FirebaseStorageManager {
     }
     
     // CREATE - Upload Data
-    func upload(uuid: String, data: Data, atPath path: String, completion: @escaping (URL?, Date?, Error?) -> Void) {
+    func upload(title: String, uuid: String, data: Data, atPath path: String, completion: @escaping (URL?, Date?, Error?) -> Void) {
         let reference = storageReference.child(path)
         
         let newMetadata = StorageMetadata()
-        newMetadata.customMetadata = ["uuid" : uuid]
+        newMetadata.customMetadata = ["uuid" : uuid, "title": title]
         
         reference.putData(data, metadata: newMetadata) { metadata, error in
             guard error == nil else {
@@ -70,12 +70,14 @@ class FirebaseStorageManager {
         let reference = storageReference.child("/arquivos/"+fileName)
         
         var name: String  = ""
+        var title: String  = ""
         var date: Date  = Date()
         
         reference.getMetadata() { data, error in
             if let data = data {
                 if let customMetadata = data.customMetadata {
                     name = customMetadata["uuid"] ?? ""
+                    title = customMetadata["title"] ?? ""
                 }
                 
                 if let time = data.timeCreated {
@@ -91,7 +93,7 @@ class FirebaseStorageManager {
             
             if let data = data {
                 if let uiImage = UIImage(data: data) {
-                    let model = ImageModel(name: name, time: date, image: Image(uiImage: uiImage))
+                    let model = ImageModel(title: title, name: name, time: date, image: Image(uiImage: uiImage))
                     completion(model, nil)
                 } else {
                     print("Dados de imagem inválidos")
