@@ -28,6 +28,7 @@ struct AcademersAroundTheWorldApp: App {
     WindowGroup {
       NavigationView {
         ContentView()
+              .preferredColorScheme(.light) 
       }
     }
   }

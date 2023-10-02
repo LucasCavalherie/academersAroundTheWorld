@@ -30,7 +30,7 @@ struct CreateView: View {
                     Text("(Opcional)")
                         .font(.caption)
                     Text("Título da imagem: ")
-                    TextField("Enter your name", text: $title)
+                    TextField("Título", text: $title)
                         .textFieldStyle(.roundedBorder)
                     
                     VStack (alignment: .leading) {

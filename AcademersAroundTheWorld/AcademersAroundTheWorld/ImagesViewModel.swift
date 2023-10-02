@@ -33,11 +33,6 @@ class ImagesViewModel : ObservableObject {
             } else if let data = data {
                 print("Imagens: \(data)")
                 imageNames = data
-                
-                for image in self.images {
-                    imageNames.removeAll{$0 == image.name}
-                }
-                
                 if imageNames.count > 0 {
                     self.downloadImages(missingImageName: imageNames)
                 }
@@ -55,9 +50,7 @@ class ImagesViewModel : ObservableObject {
             } else if let data = data {
                 print("Download bem-sucedido!: \(data)")
                 
-                for item in data {
-                    self.images.append(item)
-                }
+                self.images = data
             }
         }
     }

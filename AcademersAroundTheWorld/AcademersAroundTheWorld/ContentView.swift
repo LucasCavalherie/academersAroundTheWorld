@@ -12,6 +12,8 @@ struct ContentView: View {
     var firebaseStorageManager = FirebaseStorageManager()
     @ObservedObject var imagesViewModel = ImagesViewModel.shared
     @State private var isDeleteConfirmationVisible = false
+    @State private var showingSheet = false
+    @State private var showingImage: ImageModel = ImageModel(title: "", name: "", time: Date(), image: Image(""))
 
     var body: some View {
         NavigationStack {
@@ -71,29 +73,38 @@ struct ContentView: View {
                     ForEach(0..<imagesViewModel.images.count, id: \.self) { i in
                         let image = imagesViewModel.images[i]
                         
-                        ImageCard(imageModel: image) {
-                            isDeleteConfirmationVisible.toggle()
-                        }
-                        .alert(isPresented: $isDeleteConfirmationVisible) {
-                            // Modal de confirmação
-                            Alert(
-                                title: Text("Confirmar exclusão"),
-                                message: Text("Tem certeza de que deseja excluir esta imagem?"),
-                                primaryButton: .destructive(Text("Excluir")) {
-                                    Task {
-                                        firebaseStorageManager.delete(atPath: "/arquivos/\(image.name)") { error in
-                                            if let error = error {
-                                                print("Erro ao fazer delete: \(error.localizedDescription)")
+                        Button {
+                            showingImage = image
+                            showingSheet.toggle()
+                        } label: {
+                            ImageCard(imageModel: image) {
+                                isDeleteConfirmationVisible.toggle()
+                            }
+                            .alert(isPresented: $isDeleteConfirmationVisible) {
+                                // Modal de confirmação
+                                Alert(
+                                    title: Text("Confirmar exclusão"),
+                                    message: Text("Tem certeza de que deseja excluir esta imagem?"),
+                                    primaryButton: .destructive(Text("Excluir")) {
+                                        Task {
+                                            firebaseStorageManager.delete(atPath: "/arquivos/\(image.name)") { error in
+                                                if let error = error {
+                                                    print("Erro ao fazer delete: \(error.localizedDescription)")
+                                                }
                                             }
                                         }
-                                    }
-                                    
-                                    imagesViewModel.images.removeAll(where: {$0.name == image.name})
-                                },
-                                secondaryButton: .cancel()
-                            )
+                                        
+                                        imagesViewModel.images.removeAll(where: {$0.name == image.name})
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
+                            .padding(.horizontal, 32)
                         }
-                        .padding(.horizontal, 32)
+                        .sheet(isPresented: $showingSheet) {
+                            ZoomView(imageModel: showingImage)
+                        }
+                        
                     }
                 }
                 .padding(.bottom, 16)
